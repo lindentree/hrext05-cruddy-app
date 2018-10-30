@@ -19,12 +19,18 @@ $(document).ready(function(){
   });
 
   // remove item from app
+  //clear space for new addition
+
+  //button to access keys in local storage
 
   // listen for click event (del)
+  
   $(".clear-cache-btn").on("click", function(){
     // clear local storage
     localStorage.clear();
     $(".show-text").empty();
   });
+
+  //
 
 });

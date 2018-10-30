@@ -32,4 +32,7 @@
 - [ ] bootstrap/material (css library)
 
 #### My Spin
-(to be filled out by you)
+//create Anki style flashcards (pull items out based on certain values, create a card)
+//this will require HTML and CSS effects
+//create a database object in local storage to hold different cards
+//this will require more advanced data manipulation
