@@ -1,37 +1,41 @@
 /*
-listen for click event (edit)
-update text in local storage (with key)
-update display with new text value
-
 
  */
+var curKeyValue = 0; 
+var newKeyValue = curKeyValue.toString();
+var cardInfo = {};
 
 $(document).ready(function(){
   console.log("before\n", window.localStorage);
-
-  var curKeyValue = "0"; 
-
   // add event listener
   $(".add-text-btn").on("click", function(){
     //$(".show-text").empty();
+
+    var $value = $('#theValue')
+    var $definition = $('#theValue')
     var curTextValue = $('#theValue').val(); // reading from <input>
-    //turn text to card object
-
-    window.localStorage.setItem(curKeyValue, curTextValue);
-    $(".data-entries").append(curTextValue);
-    if (curTextValue !== undefined) {
-      var newKeyValue = parseInt(curKeyValue);
-      newKeyValue++;
-      curKeyValue = newKeyValue.toString(); 
-
-    }
-    $('#theValue').empty();
-    curTextValue = undefined;
+    var curDefValue = $('#theDefinition').val();
+      if (curTextValue.length === 0 || curDefValue.length === 0) {
+        alert ('Please fill out both fields')
+      } else {
+          cardInfo[curTextValue] = curDefValue;
+          var test = JSON.stringify(cardInfo);
+          window.localStorage.setItem(newKeyValue, test);
+          var vocab = $('<li></li>')
+          vocab.text(curTextValue + " - " + curDefValue)
+          $(".data-entries").append(vocab);
+          curKeyValue++;
+          newKeyValue = curKeyValue; 
+          $value.empty();
+          $definition.empty();
+          cardInfo = {};
+        }
+    
   });
 
   // remove item from app
   //clear space for new addition
-   $(".clear-previous-btn").on("click", function(){
+  $(".clear-previous-btn").on("click", function(){
      $(".show-text").empty();
   });
 
@@ -39,8 +43,8 @@ $(document).ready(function(){
   //button to show previous entries in local storage
   $(".show-previous-btn").on("click", function(){
      $(".show-text").empty();
-    var test = JSON.stringify(localStorage);
-    $(".show-text").append(test);
+    var lsDisplay = JSON.stringify(localStorage);
+    $(".show-text").append(lsDisplay);
   });
 
   // listen for click event (del)

@@ -4,14 +4,15 @@
     <title>HREXT05 Cruddy App</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="app.js"></script>
-    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="cruddy.css">
   </head>
   <body>
-    <input type="text" class="text-input" id="theValue" placeholder="Enter some text">
-    <button class="add-text-btn">Add text</button>
+    <input type="text" class="text-input" id="theValue" placeholder="Enter a character">
+    <input type="text" class="text-input" id="theDefinition" placeholder="Enter definition">
+    <button class="add-text-btn">Add vocab</button>
     <button class="show-previous-btn">Show previous entries</button>
     <button class="clear-previous-btn">Clear previous entries</button>
     <button class="clear-cache-btn">Clear All Entries</button>
-    <div class="show-text"><div class ="data-entries"></div></div>
+    <div class="show-text"><div class ="data-entries"></div><ol></ol></div>
   </body>
 </html>
