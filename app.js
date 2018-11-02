@@ -17,7 +17,7 @@ var renderDisplay = function(storage) {
     
     if (check[firstKey] != undefined) {
       $vocabDiv.html(
-        '<span class="kanji">' + firstKey  + '</span>' + " " +  " - " + '<span class="definition">' + check[firstKey] + '</span>' + " "
+        '<span class="kanji" number=' + key + '>' + firstKey  + '</span>' + " " +  " - " + '<span class="definition" number=' + key + '>' + check[firstKey] + '</span>' + " "
         + '<button class=" del-item" number=' + key + '>Delete</button>'
       ); 
 
@@ -67,7 +67,6 @@ $(document).ready(function(){
           var $vocabDiv = $('<div class="vocab"></div>');
 
           localStorage.setItem(currentKey, test);
-          console.log(localStorage)
           $(".show-text .data-entries").empty();
           renderDisplay(localStorage);
 
@@ -96,34 +95,52 @@ $(document).ready(function(){
 
   //EDITING FUNCTION
 
-  $('.vocab').children('.kanji').click(function(){
-    var $vocab = $(this)[0].innerText;
-    console.log($(this).parent());
-      
-      //var name = this.text;
-      //console.log(name) 
-     
-    })
+  // $('.vocab').children('.kanji').click(function(){
+  //   var $vocab = $(this)[0].innerText;
+  //   var numberKey = $(this).attr('number'); 
+  //   // var newValue = editFeature($vocab);
+  //   // var editCurObj = JSON.parse(localStorage[numberKey]);
+  //   // var firstKey = Object.keys(editCurObj);
+  //   // console.log(firstKey);
 
-   $('.vocab').children('.definition').click(function(){
-    var $vocab = $(this)[0].innerText;
-    console.log($vocab);
-      
-      //var name = this.text;
-      //console.log(name) 
+  //   //  if(newValue === $vocab) {
+  //   //   renderDisplay(localStorage);
+  //   // } else {
+  //   //     localStorage.removeItem(numberKey);
+  //   //     renderDisplay(localStorage);
+  //   // }
      
-    })
+  //   })
+
+   $(".show-text").on("click", '.definition', function (el){
+
+     var $vocab = el.innerText;
+     var numberKey = $(this).attr('number'); 
+     var newValue = editFeature($vocab);
+     console.log(numberKey);
+    
+     var editCurObj = JSON.parse(localStorage[numberKey]);
+     var editKey = Object.keys(editCurObj);
+     var y = editKey[0];
+    
+     editCurObj[y] = newValue;
+
+     localStorage.removeItem(numberKey);
+     localStorage.setItem(numberKey, JSON.stringify(editCurObj));
+     $(".data-entries").empty();
+     renderDisplay(localStorage);
+       
+    });
 
 //DELETE INDIVIDUAL ENTRY
 
 $(".show-text .data-entries").on("click", ".del-item", function() {
-     console.log($(this))
-     var numberKey = $(this).attr('number') 
-      alert (numberKey);
+     var numberKey = $(this).attr('number'); 
+      //alert (numberKey);
       $(".show-text .data-entries").empty();
       localStorage.removeItem(numberKey);
       renderDisplay(localStorage);
-    // $("#theKey").val(''); //clears input box
+    
   });   
 
 //wipe local storage
