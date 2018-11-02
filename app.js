@@ -39,6 +39,7 @@ var editFeature = function(name) {
 
 $(document).ready(function(){
   console.log("before\n", window.localStorage);
+  //localStorage.clear();
   renderDisplay(localStorage);
   
   $(".add-text-btn").on("click", function(){
