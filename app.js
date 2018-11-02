@@ -4,36 +4,31 @@ var cardInfo = {};
 var renderDisplay = function(storage) {
   
   for (var key in storage) {
-    
-    var $vocabDiv = $('<div class="vocab"></div>');
-    //console.log(storage[key]);
-    
+    var $vocabDiv = $('<div class="vocab"></div>'); 
     if(storage.hasOwnProperty(key)) {
       var check = JSON.parse(storage[key]);
       var firstKey = Object.keys(check);
     } else {
         break;
-    }
+      }
     
     if (check[firstKey] != undefined) {
       $vocabDiv.html(
         '<span class="kanji" number=' + key + '>' + firstKey  + '</span>' + " " +  " - " + '<span class="definition" number=' + key + '>' + check[firstKey] + '</span>' + " "
         + '<button class=" del-item" number=' + key + '>Delete</button>'
       ); 
-
-
       $(".show-text .data-entries").append($vocabDiv);
     } else {
         continue;
-    }
+      }
   }
 
 }
 
 var editFeature = function(name) {
-  var newVal = prompt("Please make a change");
+  var newVal = prompt("Do you want to change this?");
   var oldVal = name;
-  if(newVal === null) {
+  if(newVal === null || newVal === '') {
     return oldVal;
   }
   if(newVal !== '') {
@@ -80,12 +75,10 @@ $(document).ready(function(){
     
   });
 
-  // remove item from app
   //clear space for new addition
   $(".clear-previous-btn").on("click", function(){
      $(".show-text .data-entries").empty();
   });
-
 
   //button to show previous entries in local storage
   $(".show-previous-btn").on("click", function(){
@@ -117,14 +110,15 @@ $(document).ready(function(){
      var $vocab = el.innerText;
      var numberKey = $(this).attr('number'); 
      var newValue = editFeature($vocab);
-     console.log(numberKey);
-    
      var editCurObj = JSON.parse(localStorage[numberKey]);
      var editKey = Object.keys(editCurObj);
-     var y = editKey[0];
-    
-     editCurObj[y] = newValue;
+     var kanjiKey = editKey[0];
 
+     if (newValue === $vocab) {
+        return;
+      } 
+
+     editCurObj[kanjiKey] = newValue;
      localStorage.removeItem(numberKey);
      localStorage.setItem(numberKey, JSON.stringify(editCurObj));
      $(".data-entries").empty();
@@ -135,19 +129,17 @@ $(document).ready(function(){
 //DELETE INDIVIDUAL ENTRY
 
 $(".show-text .data-entries").on("click", ".del-item", function() {
-     var numberKey = $(this).attr('number'); 
-      //alert (numberKey);
-      $(".show-text .data-entries").empty();
-      localStorage.removeItem(numberKey);
-      renderDisplay(localStorage);
+  var numberKey = $(this).attr('number'); 
+  $(".show-text .data-entries").empty();
+  localStorage.removeItem(numberKey);
+  renderDisplay(localStorage);
     
   });   
 
 //wipe local storage
   $(".clear-cache-btn").on("click", function(){
-    // clear local storage
     localStorage.clear();
-    currentKey = 0; 
+    currentKey = 1; 
     $(".show-text").empty();
   });
 
